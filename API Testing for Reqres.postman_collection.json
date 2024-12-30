@@ -1,0 +1,618 @@
+{
+	"info": {
+		"_postman_id": "13b7f0e8-b628-40bf-a2fe-4e58975c3a38",
+		"name": "API Testing for Reqres",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "39487750"
+	},
+	"item": [
+		{
+			"name": "Get request",
+			"item": [
+				{
+					"name": "ListUsers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Verify response contains expected fields\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.be.an(\"array\");\r",
+									"    \r",
+									"    jsonData.data.forEach((user) => {\r",
+									"        pm.expect(user).to.have.property(\"id\");\r",
+									"        pm.expect(user).to.have.property(\"email\");\r",
+									"        pm.expect(user).to.have.property(\"first_name\");\r",
+									"        pm.expect(user).to.have.property(\"last_name\");\r",
+									"        pm.expect(user).to.have.property(\"avatar\");\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/users?page=2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SingleUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Verify structure of 'data' object\", function () {\r",
+									"var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.have.property(\"id\");\r",
+									"    pm.expect(jsonData.data).to.have.property(\"email\");\r",
+									"    pm.expect(jsonData.data).to.have.property(\"first_name\");\r",
+									"    pm.expect(jsonData.data).to.have.property(\"last_name\");\r",
+									"    pm.expect(jsonData.data).to.have.property(\"avatar\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{base_url}}/api/users/2"
+					},
+					"response": []
+				},
+				{
+					"name": "SingleUserNotFound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{base_url}}/api/users/23"
+					},
+					"response": []
+				},
+				{
+					"name": "ListResource",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Verify response contains expected fields\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.be.an(\"array\");\r",
+									"    \r",
+									"    jsonData.data.forEach((user) => {\r",
+									"        pm.expect(user).to.have.property(\"id\");\r",
+									"        pm.expect(user).to.have.property(\"name\");\r",
+									"        pm.expect(user).to.have.property(\"year\");\r",
+									"        pm.expect(user).to.have.property(\"color\");\r",
+									"        pm.expect(user).to.have.property(\"pantone_value\");\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{base_url}}/api/unknown"
+					},
+					"response": []
+				},
+				{
+					"name": "SingleResource",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Verify structure of 'data' object\", function () {\r",
+									"var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.have.property(\"id\");\r",
+									"    pm.expect(jsonData.data).to.have.property(\"name\");\r",
+									"    pm.expect(jsonData.data).to.have.property(\"year\");\r",
+									"    pm.expect(jsonData.data).to.have.property(\"color\");\r",
+									"    pm.expect(jsonData.data).to.have.property(\"pantone_value\");\r",
+									"});\r",
+									"pm.test(\"Verify 'support' object structure \", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"   \r",
+									"    pm.expect(jsonData).to.have.property(\"support\");\r",
+									"\r",
+									"    pm.expect(jsonData.support).to.have.property(\"url\");\r",
+									"    pm.expect(jsonData.support).to.have.property(\"text\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{base_url}}/api/unknown/2"
+					},
+					"response": []
+				},
+				{
+					"name": "SingleResourceNotFound",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{base_url}}/api/unknown/23"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Post request",
+			"item": [
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"morpheus\",\r\n    \"job\": \"leader\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/api/users"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Put request",
+			"item": [
+				{
+					"name": "Update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"morpheus\",\r\n    \"job\": \"zion resident\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/api/users/2"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Patch request",
+			"item": [
+				{
+					"name": "Update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"morpheus\",\r\n    \"job\": \"zion resident\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/api/users/2"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Delete request",
+			"item": [
+				{
+					"name": "Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "{{base_url}}/api/users/2"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Post request",
+			"item": [
+				{
+					"name": "RegisterSuccessful",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"eve.holt@reqres.in\",\r\n    \"password\": \"pistol\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/api/register"
+					},
+					"response": []
+				},
+				{
+					"name": "RegisterUnsuccessful",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"sydney@fife\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/api/register"
+					},
+					"response": []
+				},
+				{
+					"name": "LoginSuccessful",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData=pm.response.json();\r",
+									"var token = jsonData.token\r",
+									"pm.environment.set(\"token\", token);\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"eve.holt@reqres.in\",\r\n    \"password\": \"cityslicka\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/api/login"
+					},
+					"response": []
+				},
+				{
+					"name": "LoginUnsuccessful",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"peter@klaven\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/api/login"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get request",
+			"item": [
+				{
+					"name": "DelayedResponse",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify response contains expected fields\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data).to.be.an(\"array\");\r",
+									"    \r",
+									"    jsonData.data.forEach((user) => {\r",
+									"        pm.expect(user).to.have.property(\"id\");\r",
+									"        pm.expect(user).to.have.property(\"email\");\r",
+									"        pm.expect(user).to.have.property(\"first_name\");\r",
+									"        pm.expect(user).to.have.property(\"last_name\");\r",
+									"        pm.expect(user).to.have.property(\"avatar\");\r",
+									"    });\r",
+									"});\r",
+									"pm.test(\"Verify 'support' object structure \", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"   \r",
+									"    pm.expect(jsonData).to.have.property(\"support\");\r",
+									"\r",
+									"    pm.expect(jsonData.support).to.have.property(\"url\");\r",
+									"    pm.expect(jsonData.support).to.have.property(\"text\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/users?delay=3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users"
+							],
+							"query": [
+								{
+									"key": "delay",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
