@@ -39,4 +39,3 @@ Acknowledgments
 This project is built using the Reqres API, a free service for testing and prototyping REST APIs.
 Feel free to explore and use this repository as a learning resource! 🌟
 
-[Reqres API Collection](https://reqres.in/)
